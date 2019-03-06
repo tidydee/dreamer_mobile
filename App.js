@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+
+import DreamList from './src/components/DreamList/DreamList';
 
 export default class App extends React.Component {
   constructor(){
@@ -28,6 +30,7 @@ export default class App extends React.Component {
       .then(this.showData)
       .catch(this.error)
   }
+
   showData = (data) => {
     this.setState({loaded: true, data: data});
     console.log(data);
@@ -43,52 +46,49 @@ export default class App extends React.Component {
   
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        {!this.state.loaded && (
-          <Text>LOADING...</Text>
-        )}
-        <Text style={styles.containerText}>Welcome to Dreamer!</Text>
-        <Button 
-          style={styles.button} 
-          title="GET ALL DREAMS" 
-          onPress={this.getData} />
-          { this.state.error !== null && (
-            <Text style={styles.err}>{ this.state.error }</Text>
+      <View style={styles.container}>
+        <View style={styles.welcomeContainer}>
+          {!this.state.loaded && (
+            <Text>LOADING...</Text>
           )}
-          { this.state.data && this.state.data.length > 0 && (
-            this.state.data.map( dream => (
-              <Text key={dream._id} style={styles.dreams}>
-                { dream.title }
-              </Text>
-            ))
-          )}
-      </ScrollView>
+          <Text style={styles.welcomeContainerText}>Welcome to Dreamer!</Text>
+          <Button 
+            style={styles.button} 
+            title="GET ALL DREAMS" 
+            onPress={this.getData} 
+          />
+        </View>
+        <DreamList
+          error={this.state.error}
+          data={this.state.data}
+        />
+        
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  welcomeContainer: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
-  containerText: {
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  welcomeContainerText: {
     color: '#000',
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold'
-  },
-  dreams: {
-    color: '#000',
-    fontSize: 15,
+
   },
   button: {
     color: 'blue',
-  },
-  err:{
-    color: 'red',
-    fontSize: 30,
-    fontWeight: 'bold'
   }
 });
