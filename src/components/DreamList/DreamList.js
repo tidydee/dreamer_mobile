@@ -1,36 +1,50 @@
 import React from 'react'; 
-import {ScrollView, Text, StyleSheet} from 'react-native';
+import {FlatList, Text, StyleSheet} from 'react-native';
 
-const DreamList = (props) => {
-  return (
-    <ScrollView contentContainerStyle={styles.dataContainer}>
-      {props.error !== null && (
+import ListItem from '../ListItem/ListItem';
+
+const DreamList = (props) => {  
+  _listEmptyComponent = () => {
+    return(
+      props.error !== null && (
         <Text style={styles.error}>{props.error}</Text> //If Error, Prints Error to Screen.
-      )}
+      )    
+    )
+  }
 
-      {props.data && props.data.length > 0 && (
-        props.data.map(dream => (
-          <Text key={dream._id} style={styles.dreamsText}>
-            {dream.title}
-          </Text>
-        ))
+  return (
+    <FlatList
+      style={styles.dataContainer}
+      data={props.data}
+      ListEmptyComponent={this._listEmptyComponent}
+      keyExtractor={(item, key) => key.toString()}
+      renderItem={(info) => (
+        <ListItem 
+          dream={info.item.title}
+        />
       )}
-    </ScrollView>
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  dataContainer: {
+  viewContainer: {
     // flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
   },
+  dataContainer: {
+    // flex: 1,
+    backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'center'
+  },
   dreamsText: {
     color: '#000',
     fontSize: 15,
     width: '80%'
-  },
+  }, 
   error: {
     color: 'red',
     fontSize: 30,

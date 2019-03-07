@@ -62,7 +62,6 @@ export default class App extends React.Component {
           error={this.state.error}
           data={this.state.data}
         />
-        
       </View>
     );
   }
