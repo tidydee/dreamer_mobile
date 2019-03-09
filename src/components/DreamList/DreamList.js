@@ -1,5 +1,5 @@
 import React from 'react'; 
-import {FlatList, Text, StyleSheet} from 'react-native';
+import {View,FlatList, Text, StyleSheet, Dimensions} from 'react-native';
 
 import ListItem from '../ListItem/ListItem';
 import dreamImage from '../../../src/assets/dreamPLaceHolder.jpg';
@@ -15,7 +15,7 @@ const DreamList = (props) => {
 
   return (
     <FlatList
-      style={styles.dataContainer}
+      contentContainerStyle={styles.cardContainer}
       data={props.data}
       ListEmptyComponent={this._listEmptyComponent}
       keyExtractor={(item, key) => key.toString()}
@@ -30,23 +30,14 @@ const DreamList = (props) => {
 };
 
 const styles = StyleSheet.create({
-  viewContainer: {
+  cardContainer: {
     // flex: 1,
+    overflow: 'hidden',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    width: Dimensions.get('window').width,
+    borderWidth: 0,
   },
-  dataContainer: {
-    // flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center'
-  },
-  dreamsText: {
-    color: '#000',
-    fontSize: 15,
-    width: '60%'
-  }, 
   error: {
     color: 'red',
     fontSize: 30,
