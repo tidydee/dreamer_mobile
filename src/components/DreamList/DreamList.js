@@ -2,6 +2,7 @@ import React from 'react';
 import {FlatList, Text, StyleSheet} from 'react-native';
 
 import ListItem from '../ListItem/ListItem';
+import dreamImage from '../../../src/assets/dreamPLaceHolder.jpg';
 
 const DreamList = (props) => {  
   _listEmptyComponent = () => {
@@ -19,7 +20,8 @@ const DreamList = (props) => {
       ListEmptyComponent={this._listEmptyComponent}
       keyExtractor={(item, key) => key.toString()}
       renderItem={(info) => (
-        <ListItem 
+        <ListItem
+          dreamImage={dreamImage}
           dream={info.item.title}
         />
       )}
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   dreamsText: {
     color: '#000',
     fontSize: 15,
-    width: '80%'
+    width: '60%'
   }, 
   error: {
     color: 'red',
