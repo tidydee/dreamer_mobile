@@ -1,8 +1,7 @@
 import React from 'react'; 
-import {View,FlatList, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, FlatList, Text, StyleSheet, Dimensions} from 'react-native';
 
 import ListItem from '../ListItem/ListItem';
-import dreamImage from '../../../src/assets/dreamPLaceHolder.jpg';
 
 const DreamList = (props) => {  
   _listEmptyComponent = () => {
@@ -14,18 +13,21 @@ const DreamList = (props) => {
   }
 
   return (
-    <FlatList
-      contentContainerStyle={styles.cardContainer}
-      data={props.data}
-      ListEmptyComponent={this._listEmptyComponent}
-      keyExtractor={(item, key) => key.toString()}
-      renderItem={(info) => (
-        <ListItem
-          dreamImage={dreamImage}
-          dream={info.item.title}
-        />
-      )}
-    />
+    <View>
+      <FlatList
+        contentContainerStyle={styles.cardContainer}
+        data={props.data}
+        ListEmptyComponent={this._listEmptyComponent}
+        keyExtractor={(item, key) => key.toString()}
+        renderItem={(info) => (
+          <ListItem
+            dreamImage={props.image}
+            dream={info.item.title}
+            onItemPressed={() => props.onItemSelected(info.item._id)}
+          />
+        )}
+      />
+    </View>
   );
 };
 

@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 import DreamList from '../DreamList/DreamList';
+import DreamDetail from '../DreamDetail/DreamDetail';
 
 class GetData extends Component {
   state = {
     data: null,
     loaded: true,
-    error: null
+    error: null,
+    selectedDream: null
   }
 
-  baseURL = 'http://127.0.0.1:3000';
+  //LOCALHOST_IP = 127.0.0.1
+  //EXPO_IP = 192.168.1.65:19000
+  baseURL = 'http://192.168.1.65:3000';
 
   getData = (ev) => {
     this.setState({ loaded: false, error: null });
@@ -38,6 +42,17 @@ class GetData extends Component {
     this.setState({ loaded: true, error: err.message });
   }
 
+  dreamSelectedHandler = (key) => {
+    console.log("HERERERERERERERERERERER")
+    this.setState(prevState => {
+      return {
+        selectedPlace: prevState.data.find(place =>{
+          return dream.key === key;
+        })
+      };
+    })
+  }
+
   componentDidMount() {
     // this.getData();
   }
@@ -48,6 +63,9 @@ class GetData extends Component {
         {!this.state.loaded && (
           <Text>LOADING...</Text>
         )}
+        <DreamDetail
+          selectedDream={this.state.selectedDream}
+        />
         <Text style={styles.welcomeContainerText}>Welcome to Dreamer!</Text>
         <Button
           style={styles.button}
@@ -58,6 +76,7 @@ class GetData extends Component {
         <DreamList
           error={this.state.error}
           data={this.state.data}
+          onItemSelected={this.dreamSelectedHandler}
         />
         </View>
       </View>

@@ -1,17 +1,19 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet} from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 
 const ListItem = (props) => {
   return(
-    <View style={styles.listItem}>
-      <Image resizeMode='cover' style={styles.dreamImage} source={props.dreamImage} />
-      <Text 
-        style={styles.dreamText}
-        numberOfLines={1}
-        >
-        {props.dream}
-      </Text>  
-    </View>
+    <TouchableOpacity onPress={props.onItemPressed}>
+      <View style={styles.listItem}>
+        <Image resizeMode='cover' style={styles.dreamImage} source={props.dreamImage} />
+        <Text 
+          style={styles.dreamText}
+          numberOfLines={1}
+          >
+          {props.dream}
+        </Text>  
+      </View>
+    </TouchableOpacity>
   )
 };
 
