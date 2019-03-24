@@ -1,4 +1,4 @@
-import { GET_DREAMS, DELETE_DREAM, SELECT_DREAM, DESELECT_DREAM, SET_DREAMS } from '../actions/actionTypes';
+import { GET_DREAMS, DELETE_DREAM, SELECT_DREAM, DESELECT_DREAM, ADD_DREAM, IS_ADDING, IS_EDITING, DESELECT_DREAM_EDIT, IS_UPDATING } from '../actions/actionTypes';
 
 import dreamImage from '../../assets/dreamPlaceHolder.jpg';
 
@@ -8,17 +8,42 @@ const initialState = {
   image: dreamImage,
   loaded: true,
   error: null,
-  selectedDream: null
+  selectedDream: null,
+  isAdding: null,
+  isEditing: null,
+  dreamInEdit: null,
+  // selectedDreamState: null
 };
 
 //Case - define cases here
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_DREAMS:
-    return {
-      ...state,
-      dreams: action.dreams
-    };
+    case IS_UPDATING:
+      return {
+        ...state,
+        selectedDream: action.updatedDream,
+        data: state.data.map(dream => dream._id === action.updatedDream._id ? action.updatedDream : dream),
+        isEditing: null
+      }
+    case IS_EDITING:
+     console.log("IS_EDITING REDUCER REACHED");
+     return {
+       ...state,
+       isEditing: true,
+      //  selectedDreamState: state.data.find(dream => {
+      //    return dream._id === action.dreamID
+      //  })
+     };
+    case IS_ADDING:
+      return {
+        ...state,
+        isAdding: true
+      };
+    case ADD_DREAM:
+      return {
+        ...state,
+        data: state.data.concat(action.data)
+      };
     case GET_DREAMS:
       return {
         ...state,
@@ -31,7 +56,8 @@ const reducer = (state = initialState, action) => {
         data: state.data.filter(dream => {
           return dream._id !== state.selectedDream._id;
         }),
-        selectedDream: null
+        selectedDream: null,
+        isEditing: null
       };
     case SELECT_DREAM:
       return {
@@ -43,8 +69,16 @@ const reducer = (state = initialState, action) => {
     case DESELECT_DREAM:
       return {
         ...state,
-        selectedDream: null
+        selectedDream: null,
+        isAdding: null,
+        // isEditing: null,
+        // selectedDreamState: null
       };
+    case DESELECT_DREAM_EDIT:
+      return {
+        ...state,
+        isEditing: null
+      }
     default:
       return state;
   }

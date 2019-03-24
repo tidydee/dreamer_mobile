@@ -1,1 +1,1 @@
-export { getDreams, deleteDream, selectDream, deselectDream } from './dreams';
+export { updateDream, isUpdating, isEditing, isAdding, addDream, getDreams, deleteDream, selectDream, deselectDream, deselectDreamEdit } from './dreams';

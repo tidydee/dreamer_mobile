@@ -1,53 +1,71 @@
-import React from 'react';
-import { Modal, View, Image, Text, Button, ScrollView, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Modal, View, Image, Text, Button,ScrollView, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-saveHandler = () => {
-  console.log("Save Handler");
-}
+import { isEditing, deleteDream, selectDream, deselectDream } from '../../store/actions/index';
 
-deleteHandler = () => {
-  console.log("Delete Handler");
-}
+import DreamEdit from '../DreamEdit/DreamEdit';
 
-closeHandler = () => {
-  console.log("Close Handler");
-}
 
-const DreamDetail = (props) => (
+class DreamDetail extends Component {
 
-  // <Modal visible={props.selectedDream !== null}>
-  <Modal onRequestClose={props.onModalClose} visible={props.selectedDream !== null } animationType="slide">
-      <View style={styles.modalContainer}>
-        {/* TODO: Add dream theme icons/images to MongoDB and load via ref ID. Then load into RN via URL-Image, see "Udemy034 UsingNetworkImages" */}
-        <Image style={styles.modalImage} source={props.image} />
-    <ScrollView style={styles.scrollViewContainer}>
-        <Text style={styles.modalText}>_ID: {props.selectedDream ? props.selectedDream._id : null}</Text>
-        <Text style={styles.modalText}>DATE: {props.selectedDream ? props.selectedDream.date : null}</Text>
-        <Text style={styles.modalText}>TITLE: {props.selectedDream ? props.selectedDream.title : null}</Text>
-        <Text style={styles.modalText}>THEME: {props.selectedDream ? props.selectedDream.theme : null}</Text>
-        <Text style={styles.modalText}>WHERE WAS I: {props.selectedDream ? props.selectedDream.whereWasI : null}</Text>
-        <Text style={styles.modalText}>FOCUS: {props.selectedDream ? props.selectedDream.focus : null}</Text>
-        <Text style={styles.modalText}>SUB_FOCUS: {props.selectedDream ? props.selectedDream.subFocus : null}</Text>
-        <Text style={styles.modalText}>COLOR: {props.selectedDream ? props.selectedDream.color : null}</Text>
-        <Text style={styles.modalText}>BLACK & WHITE: {props.selectedDream ? props.selectedDream.blackAndWhite : null}</Text>
-        <Text style={styles.modalText}>MUTED: {props.selectedDream ? props.selectedDream.muted : null}</Text>
-        <Text style={styles.modalText}>RECURRING DREAM: {props.selectedDream ? props.selectedDream.recurringDream : null}</Text>
-        <Text style={styles.modalText}>CATEGORY: {props.selectedDream ? props.selectedDream.category : null}</Text>
-        <Text style={styles.modalText}>CONTEXT: {props.selectedDream ? props.selectedDream.context : null}</Text>
-        <Text style={styles.modalText}>DREAM: {props.selectedDream ? props.selectedDream.dream : null}</Text>
-        <Text style={styles.modalText}>INTERPRETATION: {props.selectedDream ? props.selectedDream.interpretation : null}</Text>
-        <Text style={styles.modalText}>MY RESPONSE: {props.selectedDream ? props.selectedDream.myResponse : null}</Text>
-        <Text style={styles.modalText}>USER_ID: {props.selectedDream ? props.selectedDream.userId : null}</Text>
-    </ScrollView>
-        <View style={styles.buttonLayout}>
-          <Button title='Save' onPress={this.saveHandler} />
-          <Button title='Delete' color='red' onPress={() => props.onItemDeleted(props.selectedDream ? props.selectedDream._id : null )} />
-          <Button title='Close' color='grey' onPress={props.onModalClose} />
+  onDreamEdit = (id) => {
+    console.log("ID");
+    console.log(id);
+    this.props.onEditing(id)
+  }
+
+  render() {
+    const { onModalClose, isEditing, image, selectedDream, dreamUpdate, onItemSaved, onItemDeleted } = this.props;
+    return (
+      <Modal onRequestClose={onModalClose} animationType="slide">
+        <View style={styles.modalContainer}>
+          {/* TODO: Add dream theme icons/images to MongoDB and load via ref ID. Then load into RN via URL-Image, see "Udemy034 UsingNetworkImages" */}
+          <Image style={styles.modalImage} source={image} />
+          {isEditing ?
+            <Modal onRequestClose={onModalClose} animationType="slide">
+              <Text>MADE IT!!!</Text>
+              <Text>MADE IT!!!</Text>
+              <DreamEdit 
+                // dream={selectedDreamState}
+                onItemEditData={dreamUpdate} 
+                onItemSaved={onItemSaved}
+                onModalClose={onModalClose}
+              />
+            </Modal>
+            : <View>
+              <ScrollView style={styles.scrollViewContainer}>
+                <Text style={styles.modalText}>_ID: {selectedDream._id}</Text>
+                <Text style={styles.modalText}>DATE: {selectedDream.date}</Text>
+                <Text style={styles.modalText}>TITLE: {selectedDream.title}</Text>
+                <Text style={styles.modalText}>THEME: {selectedDream.theme}</Text>
+                <Text style={styles.modalText}>WHERE WAS I: {selectedDream.whereWasI}</Text>
+                <Text style={styles.modalText}>FOCUS: {selectedDream.focus}</Text>
+                <Text style={styles.modalText}>SUB_FOCUS: {selectedDream.subFocus}</Text>
+                <Text style={styles.modalText}>COLOR: {selectedDream.color ? "Yes" : "No"}</Text>
+                <Text style={styles.modalText}>BLACK & WHITE: {selectedDream.blackAndWhite ? "Yes" : "No"}</Text>
+                <Text style={styles.modalText}>MUTED: {selectedDream.muted ? "Yes" : "No"}</Text>
+                <Text style={styles.modalText}>RECURRING DREAM: {selectedDream.recurringDream ? "Yes" : "No"}</Text>
+                <Text style={styles.modalText}>CATEGORY: {selectedDream.category}</Text>
+                <Text style={styles.modalText}>CONTEXT: {selectedDream.context}</Text>
+                <Text style={styles.modalText}>DREAM: {selectedDream.dream}</Text>
+                <Text style={styles.modalText}>INTERPRETATION: {selectedDream.interpretation}</Text>
+                <Text style={styles.modalText}>MY RESPONSE: {selectedDream.myResponse}</Text>
+                <Text style={styles.modalText}>USER_ID: {selectedDream.userId}</Text>
+              </ScrollView>
+              <View style={styles.buttonLayout}>
+                <Button title='Edit' color='blue' onPress={() => this.onDreamEdit(selectedDream ? selectedDream._id : null)} />
+                <Button title='Print State' color='blue' onPress={() => console.log(this.props.selectedDream)} />
+                <Button title='Delete' color='red' onPress={() => onItemDeleted(selectedDream ? selectedDream._id : null)} />
+                <Button title='Close' color='grey' onPress={onModalClose} />
+              </View>
+            </View>
+          }
         </View>
-      </View>
-  </Modal>
-
-)
+      </Modal>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -79,4 +97,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DreamDetail;
+const mapStateToProps = state => {
+  return {
+    // selectedDreamState: state.dreams.selectedDreamState,
+    selectedDream: state.dreams.selectedDream,
+    isEditing: state.dreams.isEditing,
+    
+    dreamInEdit: state.dreams.dreamInEdit
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onEditing: (id) => dispatch(isEditing(id)),
+    onDeleteDream: (id) => dispatch(deleteDream(id)),
+    onSelectDream: (key) => dispatch(selectDream(key)),
+    onDeselectDream: () => dispatch(deselectDream())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DreamDetail);
