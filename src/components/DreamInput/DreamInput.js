@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TextInput, Button, Picker, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, TextInput, Button, Switch, StyleSheet } from 'react-native'
 
 import ObjectID from 'bson-objectid';
 
@@ -14,10 +14,10 @@ class DreamInput extends Component {
       whereWasI: '',
       focus: '',
       subFocus: '',
-      color: '',
-      blackAndWhite: '',
-      muted: '',
-      recurringDream: '',
+      color: true,
+      blackAndWhite: false,
+      muted: false,
+      recurringDream: false,
       category: '',
       context: '',
       dream: '',
@@ -146,6 +146,15 @@ class DreamInput extends Component {
       }
     });
   };
+
+  // dreamChangeHandler = (dream) => {
+  //   this.setState({
+  //     dream: {
+  //       ...this.state.dream,
+  //       [key]: value
+  //     }
+  //   });
+  // };
   
   onItemSavedHandler = () => {
     console.log(this.state.dream);
@@ -188,28 +197,28 @@ class DreamInput extends Component {
             onChangeText={this.subFocusChangeHandler}
             style={styles.modalText}
           />
-          <TextInput
-            placeholder={"COLOR"}
+          <Text>COLOR</Text>
+          <Switch 
             value={this.state.dream.color}
-            onChangeText={this.colorChangeHandler}
+            onValueChange={this.colorChangeHandler}
             style={styles.modalText}
           />
-          <TextInput
-            placeholder={"BLACK & WHITE"}
+          <Text>BLACK & WHITE</Text>
+          <Switch 
             value={this.state.dream.blackAndWhite}
-            onChangeText={this.blackAndWhiteChangeHandler}
+            onValueChange={this.blackAndWhiteChangeHandler}
             style={styles.modalText}
           />
-          <TextInput
-            placeholder={"MUTED"}
+          <Text>MUTED</Text>
+          <Switch 
             value={this.state.dream.muted}
-            onChangeText={this.mutedChangeHandler}
+            onValueChange={this.mutedChangeHandler}
             style={styles.modalText}
           />
-          <TextInput
-            placeholder={"RECURRING DREAM"}
+          <Text>RECURRING DREAM</Text>
+          <Switch 
             value={this.state.dream.recurringDream}
-            onChangeText={this.recurringDreamChangeHandler}
+            onValueChange={this.recurringDreamChangeHandler}
             style={styles.modalText}
           />
           <TextInput

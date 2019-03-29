@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TextInput, Button, Picker, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
 
 // import ObjectID from 'bson-objectid';
 import { updateDream, deselectDreamEdit } from '../../store/actions/index';
@@ -247,7 +248,11 @@ class DreamEdit extends Component {
           {/* <Text style={styles.modalText}>USER_ID: </Text> //TODO: NEED TO HANDLE FUTURE AUTH FOR JWT LOGIN */}
         </ScrollView>
         <View style={styles.buttonLayout}>
-          <Button title='Save' onPress={this.onItemUpdateHandler} />
+          {/* <Button title='Save' onPress={this.onItemUpdateHandler} /> */}
+          {/* <Ionicons name="md-checkmark-circle" size={32} color="green" onPress={this.onItemUpdateHandler}/> */}
+          {/* <Ionicons name="md-checkcircleo" size={32} color="green" onPress={this.onItemUpdateHandler}/> */}
+          <Ionicons name="ios-checkmark-circle-outline" size={50} color="green" onPress={this.onItemUpdateHandler}/>
+
           {/* <Button title='Close' color='grey' onPress={this.props.onModalClose} /> */}
           <Button title='Close' color='grey' onPress={this.props.onDeselectDream} />
         </View>
