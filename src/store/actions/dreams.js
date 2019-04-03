@@ -7,7 +7,7 @@ const HEADERS = {
 }
 const LOCAL_HOST_IP = '127.0.0.1';
 const EXPO_IP = '192.168.1.65';
-const BASE_URL = 'http://' + EXPO_IP  + ':3000';
+const BASE_URL = "http://" + EXPO_IP + ":3000";
 
 // Action Creators
 export const updateDream = (updatedDream) => {
