@@ -10,7 +10,7 @@ import { createSwitchNavigator,
 import { Provider, connect } from 'react-redux';
 
 import configureStore from './src/store/configureStore';
-import { isEditing, isAdding, addDream, getDreams, deleteDream, selectDream, deselectDream } from './src/store/actions/index';
+// import { isEditing, isAdding, addDream, getDreams, deleteDream, selectDream, deselectDream } from './src/store/actions/index';
 
 import AuthScreen from './src/screens/Auth/Auth';
 import Entries from "./src/screens/Entries/Entries";
@@ -34,36 +34,37 @@ const DashboardTabNavigator = createBottomTabNavigator({
 
 const DashboardStackNavigator = createStackNavigator({
   DashboardTabNavigator: DashboardTabNavigator
-},{
-  defaultNavigationOptions:({navigation}) => {
-    return{
-      headerLeft: (
-        <Icon 
-          style={{ paddingLeft: 10 }}
-          onPress={() => navigation.openDrawer()}
-          name="md-menu" 
-          size={30} 
-        />),
-      headerRight: (
-        <Icon
-          style={{ paddingRight: 10 }}
-          onPress={() => alert("Hello")}
-          name="md-add"
-          size={30}
-        />
-      )}
-  }
+// },{
+//   defaultNavigationOptions:({navigation}) => {
+//     return{
+//       // headerLeft: (
+//       //   <Icon 
+//       //     style={{ paddingLeft: 10 }}
+//       //     onPress={() => navigation.openDrawer()}
+//       //     name="md-menu" 
+//       //     size={30} 
+//       //   />),
+//       headerRight: (
+//         <Icon
+//           style={{ paddingRight: 10 }}
+//           onPress={() => alert("Hello")}
+//           name="md-add"
+//           size={30}
+//         />
+//       )}
+//   }
 });
 
-const AppDrawerNavigator = createDrawerNavigator({
-  Dashboard: {
-    screen: DashboardStackNavigator
-  }
-});
+//For when I Need a drawerNav. Then Pass into AppSwitchNavigator.
+// const AppDrawerNavigator = createDrawerNavigator({
+//   Dashboard: {
+//     screen: DashboardStackNavigator
+//   }
+// });
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Welcome: { screen: AuthScreen},
-  Dashboard: { screen: AppDrawerNavigator}
+  Welcome: { screen: AuthScreen },
+  Dashboard: { screen: DashboardStackNavigator }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator)
