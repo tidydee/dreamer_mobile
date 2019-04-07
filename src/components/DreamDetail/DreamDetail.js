@@ -75,7 +75,7 @@ class DreamDetail extends Component {
                   _ID: {selectedDream._id}
                 </Text>
                 <Text style={styles.modalText}>
-                  DATE: {selectedDream.date}
+                    DATE: {selectedDream.date}
                 </Text>
                 <Text style={styles.modalText}>
                   TITLE: {selectedDream.title}

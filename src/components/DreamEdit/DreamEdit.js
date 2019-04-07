@@ -18,14 +18,12 @@ import { updateDream, deselectDreamEdit } from '../../store/actions/index';
 
 const { height, width } = Dimensions.get("window");
 
-const todayDate = new Date();
-todayDate.setMinutes(todayDate.getMinutes() - todayDate.getTimezoneOffset());
-todayDate.toISOString().slice(0, 10);
+const currentDate = new Date();
+const timeStamp = currentDate.getTime();
 
 class DreamEdit extends Component {
   state = {
-    dateNow: new Date().toISOString().split("T")[0],
-    date: todayDate,
+    datePicker: this.props.selectedDream.date,
     selectedDream: {
       _id: this.props.selectedDream._id,
       date: this.props.selectedDream.date,
@@ -46,14 +44,22 @@ class DreamEdit extends Component {
     }
   };
 
-  // dateChangeHandler = () => { //TODO: Handle Date input with a DatePicker
-  //   this.setState({
-  //     dream: {
-  //       ...this.state.dream,
-  //       date: Date.now()
-  //     }
-  //   });
-  // };
+  onDateChangeHandler = date => {
+    const dateAsString = date;
+    const newDateString = new Date(dateAsString.replace(/-/g, "/"));
+    console.log(newDateString.getTime());
+    const newTimestamp = newDateString.getTime();
+    this.setState({
+      ...this.state.datePicker,
+      datePicker: date
+    });
+    this.setState({
+      selectedDream: {
+        ...this.state.selectedDream,
+        date: newTimestamp
+      }
+    });
+  };
   titleChangeHandler = title => {
     this.setState({
       selectedDream: {
@@ -211,14 +217,14 @@ class DreamEdit extends Component {
           </Text>
           <DatePicker
             style={{ width: 300, paddingBottom: 10 }}
-            date={this.state.date}
+            date={this.state.datePicker}
             mode="datetime"
             placeholder="select date"
             format="YYYY-MM-DD, h:mm a"
             // format="MMMM YYYY, h:mm a"
             // format="LLLL"
             minDate="2016-05-01"
-            maxDate={this.state.dateNow}
+            maxDate={currentDate}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             iconComponent={
@@ -244,9 +250,7 @@ class DreamEdit extends Component {
               }
             }}
             //   // ... You can check the source to find the other keys.
-            onDateChange={date => {
-              this.setState({ date: date });
-            }}
+            onDateChange={this.onDateChangeHandler}
           />
           <Text>TITLE</Text>
           <TextInput

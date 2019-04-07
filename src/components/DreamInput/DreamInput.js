@@ -18,17 +18,17 @@ import ObjectID from 'bson-objectid';
 
 const { height, width } = Dimensions.get("window");
 
-const todayDate = new Date(); 
-todayDate.setMinutes(todayDate.getMinutes() - todayDate.getTimezoneOffset()); 
-todayDate.toISOString().slice(0, 10);
+//Calculating Current Date & TimeStamp. TimeStamp to be stored in DB.
+const currentDate = new Date();
+const timeStamp = currentDate.getTime();
+
 
 class DreamInput extends Component {
   state = {
-    dateNow: new Date().toISOString().split("T")[0],
-    date: todayDate,
+    datePicker: currentDate,
     dream: {
       _id: ObjectID().toString(),
-      date: Date.now(),
+      date: timeStamp,
       // selectedStartDate: null,
       title: "",
       theme: "",
@@ -46,15 +46,24 @@ class DreamInput extends Component {
       myResponse: ""
     }
   };
-
-  // onDateChange = date => {
-  //   this.setState({
-  //     dream: {
-  //       ...this.state.dream,
-  //       selectedStartDate: date
-  //     }
-  //   });
-  // }
+  
+  onDateChangeHandler = date => {
+    const dateAsString = date;
+    const newDateString =  new Date(dateAsString.replace(/-/g, '/'))
+    console.log(newDateString.getTime())
+    const newTimestamp = newDateString.getTime()
+    
+    this.setState({
+      ...this.state.datePicker,
+      datePicker: date
+    });
+    this.setState({
+      dream: {
+        ...this.state.dream,
+        date: newTimestamp
+      }
+    });
+  };
 
   titleChangeHandler = title => {
     this.setState({
@@ -228,15 +237,15 @@ class DreamInput extends Component {
             DATE: {this.state.dream.date}
           </Text>
           <DatePicker
-            style={{ width: 300, paddingBottom: 10 }}
-            date={this.state.date}
+            style={{ width: 320, paddingBottom: 10 }}
+            date={this.state.datePicker}
             mode="datetime"
             placeholder="select date"
-            format="YYYY-MM-DD, h:mm a"
+            format="LLLL"
             // format="MMMM YYYY, h:mm a"
             // format="LLLL"
             minDate="2016-05-01"
-            maxDate={this.state.dateNow}
+            maxDate={this.state.datePicker}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             iconComponent={
@@ -262,9 +271,7 @@ class DreamInput extends Component {
               }
             }}
             //   // ... You can check the source to find the other keys.
-            onDateChange={date => {
-              this.setState({ date: date });
-            }}
+            onDateChange={this.onDateChangeHandler}
           />
           <Text>TITLE</Text>
           <TextInput
