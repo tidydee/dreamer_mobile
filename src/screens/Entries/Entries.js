@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Provider, connect } from 'react-redux';
+import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons librarys
 
 import DreamList from "../../components/DreamList/DreamList";
 import DreamDetail from '../../components/DreamDetail/DreamDetail';
 import DreamCreate from '../../components/DreamCreate/DreamCreate';
 import dreamImage from "../../assets/dreamPlaceHolder.jpg";
+import HeaderAddButton from '../../components/HeaderAddButton/HeaderAddButton';
 
 import { isEditing, isAdding, addDream, getDreams, deleteDream, selectDream, deselectDream } from '../../store/actions/index';
 
+import configureStore from "../../store/configureStore";
+const store = configureStore();
+
 class Entries extends Component {
-  static navigationOptions = {
-    title: "Entries",
-    headerLeft: null
+  static navigationOptions = ({ navigation}) =>  {
+    const { params } = navigation.state;
+    return {
+      title: "Entries",
+      headerLeft: null,
+      headerRight: (
+        <HeaderAddButton />
+      )
+    };
+    
   };
 
   getData = () => {
@@ -86,7 +98,6 @@ class Entries extends Component {
             style={styles.button}
             title="ADD DREAM"
             onPress={this.props.onIsAdding}
-            // onPress={this.dreamAddedHandler}
           />
           <View style={{ flex: 1 }}>
             <DreamList

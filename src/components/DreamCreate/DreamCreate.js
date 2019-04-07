@@ -8,16 +8,15 @@ const DreamCreate = ({ isAdding, image, onModalClose, onItemSaved }) => {
     <Modal onRequestClose={onModalClose} animationType="slide">
       <View style={styles.modalContainer}>
         {/* TODO: Add dream theme icons/images to MongoDB and load via ref ID. Then load into RN via URL-Image, see "Udemy034 UsingNetworkImages" */}
-        <Image style={styles.modalImage} source={image} />
-        {isAdding ? 
-          <DreamInput
-            onItemSaved={onItemSaved}
-            onModalClose={onModalClose}
-          />
-        : null}
+        
+        {/* <Image style={styles.modalImage} source={image} /> */}
+
+        {isAdding ? (
+          <DreamInput onItemSaved={onItemSaved} onModalClose={onModalClose} />
+        ) : null}
       </View>
     </Modal>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

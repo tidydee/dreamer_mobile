@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TextInput, Button, Picker, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  Switch,
+  TouchableOpacity,
+  Button,
+  StyleSheet,
+  Dimensions
+} from "react-native";
 import { connect } from 'react-redux';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons library
+import DatePicker from "react-native-datepicker";
 
-// import ObjectID from 'bson-objectid';
 import { updateDream, deselectDreamEdit } from '../../store/actions/index';
+
+const { height, width } = Dimensions.get("window");
+
+const todayDate = new Date();
+todayDate.setMinutes(todayDate.getMinutes() - todayDate.getTimezoneOffset());
+todayDate.toISOString().slice(0, 10);
 
 class DreamEdit extends Component {
   state = {
+    dateNow: new Date().toISOString().split("T")[0],
+    date: todayDate,
     selectedDream: {
       _id: this.props.selectedDream._id,
       date: this.props.selectedDream.date,
@@ -36,7 +54,7 @@ class DreamEdit extends Component {
   //     }
   //   });
   // };
-  titleChangeHandler = (title) => {
+  titleChangeHandler = title => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -44,7 +62,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  themeChangeHandler = (theme) => {
+  themeChangeHandler = theme => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -52,7 +70,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  whereWasIChangeHandler = (whereWasI) => {
+  whereWasIChangeHandler = whereWasI => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -60,7 +78,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  focusChangeHandler = (focus) => {
+  focusChangeHandler = focus => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -68,7 +86,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  subFocusChangeHandler = (subFocus) => {
+  subFocusChangeHandler = subFocus => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -76,7 +94,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  colorChangeHandler = (color) => {
+  colorChangeHandler = color => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -84,7 +102,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  blackAndWhiteChangeHandler = (blackAndWhite) => {
+  blackAndWhiteChangeHandler = blackAndWhite => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -92,7 +110,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  mutedChangeHandler = (muted) => {
+  mutedChangeHandler = muted => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -100,7 +118,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  recurringDreamChangeHandler = (recurringDream) => {
+  recurringDreamChangeHandler = recurringDream => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -108,7 +126,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  categoryChangeHandler = (category) => {
+  categoryChangeHandler = category => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -116,7 +134,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  contextChangeHandler = (context) => {
+  contextChangeHandler = context => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -124,7 +142,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  dreamChangeHandler = (dream) => {
+  dreamChangeHandler = dream => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -132,7 +150,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  interpretationChangeHandler = (interpretation) => {
+  interpretationChangeHandler = interpretation => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -140,7 +158,7 @@ class DreamEdit extends Component {
       }
     });
   };
-  myResponseChangeHandler = (myResponse) => {
+  myResponseChangeHandler = myResponse => {
     this.setState({
       selectedDream: {
         ...this.state.selectedDream,
@@ -152,93 +170,180 @@ class DreamEdit extends Component {
   onItemUpdateHandler = () => {
     console.log(this.state.selectedDream);
     // this.props.onItemSaved(this.state.dream);
-    this.props.onItemUpdate(this.state.selectedDream)
+    this.props.onItemUpdate(this.state.selectedDream);
   };
 
   render() {
     return (
       <View style={styles.modalContainer}>
-        <ScrollView style={styles.scrollViewContainer}>
-          <Text style={styles.modalText}>ID: {this.state.selectedDream._id}</Text>
-          <Text style={styles.modalText}>DATE: {this.state.selectedDream.date}</Text>
+        <View style={styles.topBarContainer}>
+          {/* <Button title='Close' color='grey' onPress={this.props.onModalClose} />
+          <Button title='Save' onPress={this.onItemSavedHandler} /> */}
+          <TouchableOpacity
+            onPress={this.props.onDeselectDream}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            style={{ marginTop: 10, margin: 5 }}
+          >
+            <Icon
+              style={{ paddingRight: 10, color: "#8e8e93" }}
+              name="md-close"
+              size={30}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.onItemUpdateHandler}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            style={{ marginTop: 10, margin: 5 }}
+          >
+            <Icon
+              style={{ paddingRight: 10, color: "#147efb" }}
+              name="md-checkmark"
+              size={30}
+            />
+          </TouchableOpacity>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          <Text style={styles.modalText}>
+            ID: {this.state.selectedDream._id}
+          </Text>
+          <Text style={styles.modalText}>
+            DATE: {this.state.selectedDream.date}
+          </Text>
+          <DatePicker
+            style={{ width: 300, paddingBottom: 10 }}
+            date={this.state.date}
+            mode="datetime"
+            placeholder="select date"
+            format="YYYY-MM-DD, h:mm a"
+            // format="MMMM YYYY, h:mm a"
+            // format="LLLL"
+            minDate="2016-05-01"
+            maxDate={this.state.dateNow}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            iconComponent={
+              <Icon
+                style={{
+                  color: "grey",
+                  position: "absolute",
+                  left: 5,
+                  top: 4,
+                  marginLeft: 0
+                }}
+                name="md-calendar"
+                size={30}
+              />
+            }
+            customStyles={{
+              dateInput: {
+                marginLeft: 50,
+                marginRight: 36,
+                borderWidth: 0,
+                borderBottomWidth: 1,
+                borderBottomColor: "blue"
+              }
+            }}
+            //   // ... You can check the source to find the other keys.
+            onDateChange={date => {
+              this.setState({ date: date });
+            }}
+          />
+          <Text>TITLE</Text>
           <TextInput
             placeholder={"TITLE"}
             value={this.state.selectedDream.title}
             onChangeText={this.titleChangeHandler}
             style={styles.modalText}
           />
+          <Text>THEME</Text>
           <TextInput
             placeholder={"THEME"}
             value={this.state.selectedDream.theme}
             onChangeText={this.themeChangeHandler}
             style={styles.modalText}
           />
+          <Text>WHERE WAS I</Text>
           <TextInput
             placeholder={"WHERE WAS I"}
             value={this.state.selectedDream.whereWasI}
             onChangeText={this.whereWasIChangeHandler}
             style={styles.modalText}
           />
+          <Text>FOCUS(ES)</Text>
           <TextInput
             placeholder={"FOCUS(ES)"}
             value={this.state.selectedDream.focus}
             onChangeText={this.focusChangeHandler}
             style={styles.modalText}
           />
+          <Text>SUB-FOCUS(ES)</Text>
           <TextInput
             placeholder={"SUB-FOCUS(ES)"}
             value={this.state.selectedDream.subFocus}
             onChangeText={this.subFocusChangeHandler}
             style={styles.modalText}
           />
-          <TextInput
-            placeholder={"COLOR"}
-            value={this.state.selectedDream.color.toString()}
-            onChangeText={this.colorChangeHandler}
-            style={styles.modalText}
-          />
-          <TextInput
-            placeholder={"BLACK & WHITE"}
-            value={this.state.selectedDream.blackAndWhite.toString()}
-            onChangeText={this.blackAndWhiteChangeHandler}
-            style={styles.modalText}
-          />
-          <TextInput
-            placeholder={"MUTED"}
-            value={this.state.selectedDream.muted.toString()}
-            onChangeText={this.mutedChangeHandler}
-            style={styles.modalText}
-          />
-          <TextInput
-            placeholder={"RECURRING DREAM"}
-            value={this.state.selectedDream.recurringDream.toString()}
-            onChangeText={this.recurringDreamChangeHandler}
-            style={styles.modalText}
-          />
+          <View>
+            <Text>COLOR</Text>
+            <Switch
+              value={this.state.selectedDream.color}
+              onValueChange={this.colorChangeHandler}
+              style={styles.modalText}
+            />
+          </View>
+          <View>
+            <Text>BLACK & WHITE</Text>
+            <Switch
+              value={this.state.selectedDream.blackAndWhite}
+              onValueChange={this.blackAndWhiteChangeHandler}
+              style={styles.modalText}
+            />
+          </View>
+          <View>
+            <Text>MUTED</Text>
+            <Switch
+              value={this.state.selectedDream.muted}
+              onValueChange={this.mutedChangeHandler}
+              style={styles.modalText}
+            />
+          </View>
+          <View>
+            <Text>RECURRING DREAM</Text>
+            <Switch
+              value={this.state.selectedDream.recurringDream}
+              onValueChange={this.recurringDreamChangeHandler}
+              style={styles.modalText}
+            />
+          </View>
+          <Text>CATEGORY</Text>
           <TextInput
             placeholder={"CATEGORY"}
             value={this.state.selectedDream.category}
             onChangeText={this.categoryChangeHandler}
             style={styles.modalText}
           />
+          <Text>CONTEXT</Text>
           <TextInput
             placeholder={"CONTEXT"}
             value={this.state.selectedDream.context}
             onChangeText={this.contextChangeHandler}
             style={styles.modalText}
           />
+          <Text>DREAM</Text>
           <TextInput
             placeholder={"DREAM"}
             value={this.state.selectedDream.dream}
             onChangeText={this.dreamChangeHandler}
             style={styles.modalText}
           />
+          <Text>INTERPRETATION</Text>
           <TextInput
             placeholder={"INTERPRETATION"}
             value={this.state.selectedDream.interpretation}
             onChangeText={this.interpretationChangeHandler}
             style={styles.modalText}
           />
+          <Text>MY RESPONSE</Text>
           <TextInput
             placeholder={"MY RESPONSE"}
             value={this.state.selectedDream.myResponse}
@@ -247,18 +352,9 @@ class DreamEdit extends Component {
           />
           {/* <Text style={styles.modalText}>USER_ID: </Text> //TODO: NEED TO HANDLE FUTURE AUTH FOR JWT LOGIN */}
         </ScrollView>
-        <View style={styles.buttonLayout}>
-          {/* <Button title='Save' onPress={this.onItemUpdateHandler} /> */}
-          {/* <Ionicons name="md-checkmark-circle" size={32} color="green" onPress={this.onItemUpdateHandler}/> */}
-          {/* <Ionicons name="md-checkcircleo" size={32} color="green" onPress={this.onItemUpdateHandler}/> */}
-          <Ionicons name="ios-checkmark-circle-outline" size={50} color="green" onPress={this.onItemUpdateHandler}/>
-
-          {/* <Button title='Close' color='grey' onPress={this.props.onModalClose} /> */}
-          <Button title='Close' color='grey' onPress={this.props.onDeselectDream} />
-        </View>
       </View>
-    )
-  };
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -269,12 +365,18 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // flexDirection: 'column'
   },
+  topBarContainer: {
+    marginTop: 20,
+    marginBottom: 15,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   scrollViewContainer: {
-    height: 150
+    paddingBottom: 500
   },
   modalText: {
     padding: 3,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     // textAlign: 'center',
     fontSize: 15
   },
@@ -284,8 +386,8 @@ const styles = StyleSheet.create({
   },
   buttonLayout: {
     // flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     height: "25%",
     marginBottom: 5
   }

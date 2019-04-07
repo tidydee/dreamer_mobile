@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
-export class Profile extends Component {
+export class Lexicon extends Component {
+  static navigationOptions = {
+    title: "Lexicon",
+    headerLeft: null
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text> Profile Tab </Text>
+        <Text> Lexicon Tab </Text>
       </View>
     )
   }
@@ -20,4 +24,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Profile;
+export default Lexicon;
