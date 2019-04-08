@@ -23,7 +23,7 @@ const timeStamp = currentDate.getTime();
 
 class DreamEdit extends Component {
   state = {
-    datePicker: this.props.selectedDream.date,
+    datePicker: new Date(this.props.selectedDream.date),
     selectedDream: {
       _id: this.props.selectedDream._id,
       date: this.props.selectedDream.date,
