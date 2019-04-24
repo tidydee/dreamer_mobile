@@ -1,5 +1,6 @@
 import React from 'react'; 
 import {View, FlatList, Text, StyleSheet, Dimensions} from 'react-native';
+import { colors } from '../../Styles/Styles';
 
 import ListItem from '../ListItem/ListItem';
 
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     // flex: 1,
     overflow: 'hidden',
-    backgroundColor: '#fff',
+    // backgroundColor: 'colors.BACKGROUND',
     alignItems: 'center',
     width: Dimensions.get('window').width,
     borderWidth: 0,

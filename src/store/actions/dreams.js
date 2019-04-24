@@ -6,8 +6,8 @@ const HEADERS = {
   'Content-Type': 'application/json'
 }
 const LOCAL_HOST_IP = '127.0.0.1';
-const EXPO_IP = '192.168.1.65';
-const BASE_URL = "http://" + LOCAL_HOST_IP + ":3000";
+const EXPO_IP = '192.168.1.64';
+const BASE_URL = "http://" + EXPO_IP + ":3000";
 
 // Action Creators
 export const updateDream = (updatedDream) => {

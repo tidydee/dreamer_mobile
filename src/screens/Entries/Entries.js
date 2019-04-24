@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Provider, connect } from 'react-redux';
 import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons librarys
+import { colors } from '../../Styles/Styles'
 
 import DreamList from "../../components/DreamList/DreamList";
 import DreamDetail from '../../components/DreamDetail/DreamDetail';
@@ -18,13 +19,18 @@ class Entries extends Component {
   static navigationOptions = ({ navigation}) =>  {
     const { params } = navigation.state;
     return {
+      headerStyle: {
+        backgroundColor: colors.HEADER_TAB_BAR
+      },
+      headerTitleStyle: {
+        color: colors.APP_HEADER_TITLE,
+      },
       title: "Entries",
       headerLeft: null,
       headerRight: (
         <HeaderAddButton />
       )
     };
-    
   };
 
   getData = () => {
@@ -60,7 +66,7 @@ class Entries extends Component {
   };
 
   componentDidMount() {
-    // this.getData();
+    this.getData();
   }
 
   render() {
@@ -89,16 +95,16 @@ class Entries extends Component {
             />
           ) : null}
 
-          <Button
+          {/* <Button
             style={styles.button}
             title="GET ALL DREAMS"
             onPress={this.getData}
-          />
-          <Button
+          /> */}
+          {/* <Button
             style={styles.button}
             title="ADD DREAM"
             onPress={this.props.onIsAdding}
-          />
+          /> */}
           <View style={{ flex: 1 }}>
             <DreamList
               error={this.props.error}
@@ -116,10 +122,10 @@ class Entries extends Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 100
+    paddingTop: 100
   },
   welcomeContainer: {
     flex: 1,

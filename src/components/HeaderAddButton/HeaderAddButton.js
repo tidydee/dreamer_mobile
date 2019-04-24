@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons librarys
+import { colors } from '../../Styles/Styles'
 
 import { isAdding } from '../../store/actions/index';
 
@@ -19,7 +20,7 @@ class HeaderAddButton extends Component {
         style={{ height: 100, marginTop: 10, margin: 5 }}
       >
         <Icon
-          style={{ paddingTop: 30, paddingRight: 10, color: "#147efb" }}
+          style={{ paddingTop: 30, paddingRight: 10, color: colors.APP_HEADER_ICON }}
           name="md-add"
           size={30}
         />

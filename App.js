@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, TouchableOpacity , StyleSheet } from 'react-native';
 import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons library
+import { colors } from './src/Styles/Styles';
 
 import { createSwitchNavigator, 
          createStackNavigator, 
@@ -49,9 +50,23 @@ const Settings = createStackNavigator({
 });
 
 const DashboardTabNavigator = createBottomTabNavigator({
-    Entries,
-    Lexicon,
-    Settings
+    Entries: {screen: Entries,
+      navigationOptions:{
+        tabBarLabel: 'Entries',
+        tabBarIcon:({tintColor}) => (
+          <Icon name='ios-list' color={tintColor} size={24} />
+        )
+      }
+    },
+
+    Lexicon: {screen: Lexicon,
+      navigationOptions:{
+        tabBarLabel: 'Lexicon',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name='ios-book' color={tintColor} size={24} />
+        )
+      }
+    },
   },
   {
     navigationOptions: ({ navigation }) => {
@@ -59,8 +74,16 @@ const DashboardTabNavigator = createBottomTabNavigator({
       return {
         headerTitle: routeName
       };
-    }
-  }
+      
+    },
+    tabBarOptions: {
+      activeTintColor: colors.APP_NAV_ICON,
+      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: colors.BOTTOM_TAB_BAR
+      }
+    },
+  },
 );
 
 // const DashboardStackNavigator = createStackNavigator({
