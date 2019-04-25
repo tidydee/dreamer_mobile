@@ -3,19 +3,16 @@ import { View, Text, Button, TouchableOpacity , StyleSheet } from 'react-native'
 import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons library
 import { colors } from './src/Styles/Styles';
 
-import { createSwitchNavigator, 
+import { createSwitchNavigator,
          createStackNavigator, 
          createAppContainer, 
-         createDrawerNavigator,
          createBottomTabNavigator,  } from "react-navigation";
 import { Provider, connect } from 'react-redux';
 
 import configureStore from './src/store/configureStore';
-// import { isEditing, isAdding, addDream, getDreams, deleteDream, selectDream, deselectDream } from './src/store/actions/index';
 
 import AuthScreen from './src/screens/Auth/Auth';
 import EntriesScreen from "./src/screens/Entries/Entries";
-// import DashboardScreen from "./src/screens/Dashboard/Dashboard";
 import LexiconScreen from "./src/screens/Lexicon/Lexicon";
 import SettingsScreen from "./src/screens/Settings/Settings";
 
