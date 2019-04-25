@@ -77,36 +77,6 @@ const DashboardTabNavigator = createBottomTabNavigator({
   },
 );
 
-// const DashboardStackNavigator = createStackNavigator({
-//   DashboardTabNavigator: DashboardTabNavigator
-// // },{
-// //   defaultNavigationOptions:({navigation}) => {
-// //     return{
-// //       // headerLeft: (
-// //       //   <Icon 
-// //       //     style={{ paddingLeft: 10 }}
-// //       //     onPress={() => navigation.openDrawer()}
-// //       //     name="md-menu" 
-// //       //     size={30} 
-// //       //   />),
-// //       headerRight: (
-// //         <Icon
-// //           style={{ paddingRight: 10 }}
-// //           onPress={() => alert("Hello")}
-// //           name="md-add"
-// //           size={30}
-// //         />
-// //       )}
-// //   }
-// });
-
-//For when I Need a drawerNav. Then Pass into AppSwitchNavigator.
-// const AppDrawerNavigator = createDrawerNavigator({
-//   Dashboard: {
-//     screen: DashboardStackNavigator
-//   }
-// });
-
 const AppSwitchNavigator = createSwitchNavigator({
   Welcome: { screen: AuthScreen },
   Dashboard: { screen: DashboardTabNavigator }
