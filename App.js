@@ -23,16 +23,7 @@ const Entries = createStackNavigator({
   DashboardTabNavigator: {
     screen: EntriesScreen,
     navigationOptions: ({ navigation }) => {
-      return {
-        // headerRight: (
-        //   <Icon
-        //     style={{ paddingRight: 10 }}
-        //     onPress={() => alert("Hello")} 
-        //     name="md-add"
-        //     size={30}
-        //   />
-        // )
-      };
+      return {};
     }
   }
 });
