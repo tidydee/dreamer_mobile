@@ -1,6 +1,6 @@
 import React from 'react'; 
 import {View, FlatList, Text, StyleSheet, Dimensions} from 'react-native';
-import { colors } from '../../Styles/Styles';
+import { colors, dimensions } from '../../Styles/Styles';
 
 import ListItem from '../ListItem/ListItem';
 
@@ -20,10 +20,13 @@ const DreamList = (props) => {
         data={props.data}
         ListEmptyComponent={this._listEmptyComponent}
         keyExtractor={(item, key) => key.toString()}
-        renderItem={(info) => (
+        renderItem={info => (
           <ListItem
             dreamImage={props.image}
-            dream={info.item.title}
+            itemTitle={info.item.title}
+            itemTheme={info.item.theme}
+            itemIntro={info.item.dream}
+            itemDate={info.item.date}
             onItemPressed={() => props.onItemSelected(info.item._id)}
           />
         )}

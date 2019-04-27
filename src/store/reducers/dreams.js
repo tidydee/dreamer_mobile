@@ -1,11 +1,12 @@
 import { GET_DREAMS, DELETE_DREAM, SELECT_DREAM, DESELECT_DREAM, ADD_DREAM, IS_ADDING, IS_EDITING, DESELECT_DREAM_EDIT, IS_UPDATING } from '../actions/actionTypes';
 
 import dreamImage from '../../assets/dreamPlaceHolder.jpg';
+import dreamIcon from "../../assets/dreamCardTypeIcon.png"
 
 //Dream Reducers
 const initialState = {
   data: null,
-  image: dreamImage,
+  image: dreamIcon,
   loaded: true,
   error: null,
   selectedDream: null,

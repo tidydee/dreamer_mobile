@@ -16,7 +16,7 @@ export class Lexicon extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> Lexicon Tab </Text>
+        <Text style={{ color: colors.ITEM_MAIN_TITLE }}> Lexicon Tab </Text>
       </View>
     )
   }
@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.BACKGROUND
+
   }
 });
 

@@ -8,6 +8,7 @@ import DreamList from "../../components/DreamList/DreamList";
 import DreamDetail from '../../components/DreamDetail/DreamDetail';
 import DreamCreate from '../../components/DreamCreate/DreamCreate';
 import dreamImage from "../../assets/dreamPlaceHolder.jpg";
+import dreamIcon from "../../assets/dreamCardTypeIcon.png"
 import HeaderAddButton from '../../components/HeaderAddButton/HeaderAddButton';
 
 import { isEditing, isAdding, addDream, getDreams, deleteDream, selectDream, deselectDream } from '../../store/actions/index';
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 100
+    paddingTop: 50
   },
   welcomeContainer: {
     flex: 1,

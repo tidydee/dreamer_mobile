@@ -62,7 +62,6 @@ const DashboardTabNavigator = createBottomTabNavigator({
       return {
         headerTitle: routeName
       };
-      
     },
     tabBarOptions: {
       activeTintColor: colors.APP_NAV_ICON,

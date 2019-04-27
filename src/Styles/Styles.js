@@ -1,8 +1,11 @@
 import { Dimensions } from 'react-native';
 
 export const dimensions = {
-  FULL_HEIGHT: Dimensions.get('window').height,
-  FULL_WIDTH: Dimensions.get('window').width 
+  FULL_HEIGHT: Dimensions.get('screen').height,
+  FULL_WIDTH: Dimensions.get('screen').width,
+
+  CARD_WIDTH: Dimensions.get('screen').width - 30,
+  CARD_HEIGHT: 100,
 }
 
 export const colors = {
@@ -12,7 +15,7 @@ export const colors = {
 
   CARD: '#454D59',
   CARD_TITLE: '#F6F6F7',
-  CARD_THEME: '#ECEDEE ',
+  CARD_THEME: '#ECEDEE',
   CARD_INTRO: '#B4B8BC',
   CARD_DATE: '#B4B8BC',
 
