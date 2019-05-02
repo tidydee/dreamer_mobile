@@ -22,7 +22,7 @@ const DreamList = (props) => {
         keyExtractor={(item, key) => key.toString()}
         renderItem={info => (
           <ListItem
-            dreamImage={props.image}
+            dreamIcon={props.image}
             itemTitle={info.item.title}
             itemTheme={info.item.theme}
             itemIntro={info.item.dream}

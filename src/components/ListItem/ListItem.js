@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { colors, dimensions } from '../../Styles/Styles';
 import Moment from 'moment';
 
@@ -9,7 +9,7 @@ const ListItem = (props) => {
       <View style={styles.listItem}>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
           <View>
-            <Image resizeMode='cover' style={styles.itemImage} source={props.dreamImage} />
+            <Image resizeMode='cover' style={styles.itemImage} source={props.dreamIcon} />
           </View>
           <View style={{ flexDirection: 'column', width: '55%'}}>
             <Text 

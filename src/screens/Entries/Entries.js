@@ -82,7 +82,7 @@ class Entries extends Component {
               // selectedDream={this.props.selectedDream}
               onModalClose={this.modalClosedHandler}
               onItemDeleted={this.dreamDeletedHandler}
-              image={dreamImage} //TODO: this is TEMP only. TO be handled with loading Image via ID over NETWORK.
+              dreamIcon={this.props.image}
             />
           ) : null}
 
@@ -92,7 +92,7 @@ class Entries extends Component {
               isAdding={this.props.isAdding} //passes isAdding to DreamDetail component.
               onModalClose={this.modalClosedHandler}
               onItemDeleted={this.dreamDeletedHandler}
-              image={dreamImage} //TODO: this is TEMP only. TO be handled with loading Image via ID over NETWORK.
+              image={this.props.image} //TODO: Integrate into Create View.
             />
           ) : null}
 

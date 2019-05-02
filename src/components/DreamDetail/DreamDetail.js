@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, View, Image, Text, Button, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { Modal, View, Image, Text, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { Header } from 'react-navigation';
+import Moment from 'moment';
 import { connect } from 'react-redux';
 import Icon from "@expo/vector-icons/Ionicons";
 import { colors, getHeaderHeight } from "../../Styles/Styles";
@@ -19,7 +20,7 @@ class DreamDetail extends Component {
     const {
       onModalClose,
       isEditing,
-      image,
+      dreamIcon,
       selectedDream,
       dreamUpdate,
       onItemSaved,
@@ -94,65 +95,135 @@ class DreamDetail extends Component {
                   onItemEditData={dreamUpdate}
                   onItemSaved={onItemSaved}
                   onModalClose={onModalClose}
+                  dreamIcon={dreamIcon}
                 />
               </Modal>
             ) : (
               <View style={styles.modalContainer}>
                 <ScrollView style={styles.scrollViewContainer}>
-                  <Text style={styles.modalText}>
-                    _ID: {selectedDream._id}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    DATE: {selectedDream.date}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    TITLE: {selectedDream.title}
-                    TITLE: {console.log("H: " + getHeaderHeight())}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    THEME: {selectedDream.theme}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    WHERE WAS I: {selectedDream.whereWasI}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    FOCUS: {selectedDream.focus}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    SUB_FOCUS: {selectedDream.subFocus}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    COLOR: {selectedDream.color ? "Yes" : "No"}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    BLACK & WHITE:{" "}
-                    {selectedDream.blackAndWhite ? "Yes" : "No"}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    MUTED: {selectedDream.muted ? "Yes" : "No"}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    RECURRING DREAM:{" "}
-                    {selectedDream.recurringDream ? "Yes" : "No"}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    CATEGORY: {selectedDream.category}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    CONTEXT: {selectedDream.context}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    DREAM: {selectedDream.dream}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    INTERPRETATION: {selectedDream.interpretation}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    MY RESPONSE: {selectedDream.myResponse}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    USER_ID: {selectedDream.userId}
-                  </Text>
+                  <View style={styles.titleBarContainer}>
+                    <View>
+                      <Image
+                        resizeMode="cover"
+                        style={styles.titleBarImage}
+                        source={dreamIcon}
+                      />
+                    </View>
+                    <View>
+                      <Text style={styles.itemTitle}>
+                        {selectedDream.title}
+                      </Text>
+                      <Text style={styles.itemTheme}>
+                        {selectedDream.theme}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text style={styles.itemDate}>
+                        {Moment(selectedDream.date).format("ll")}
+                      </Text>
+                      <Text style={styles.itemDate}>
+                        {Moment(selectedDream.date).format("LT")}
+                      </Text>
+                    </View>
+                  </View>
+                  {/* --------------------------------------- */}
+                  <View style={styles.infoContainer}>
+                    {/* <Text style={styles.modalText}>
+                      _ID: {selectedDream._id}
+                    </Text> */}
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        WHERE WAS I
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.whereWasI}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        FOCUS - MAIN PLAYER IN DREAM
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.focus}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        SUB_FOCUS(ES)
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.subFocus}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>COLOR</Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.color ? "Yes" : "No"}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        BLACK & WHITE
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.blackAndWhite ? "Yes" : "No"}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>MUTED</Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.muted ? "Yes" : "No"}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        RECURRING DREAM
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.recurringDream ? "Yes" : "No"}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>CATEGORY</Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.category}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>CONTEXT</Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.context}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>DREAM</Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.dream}
+                      </Text>
+                    </View>
+                    <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        INTERPRETATION
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.interpretation}
+                      </Text>
+                    </View>
+                    <View style={styles.lastItemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>
+                        MY RESPONSE
+                      </Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.myResponse}
+                      </Text>
+                    </View>
+                    {/* <View style={styles.itemInfoArea}>
+                      <Text style={styles.itemInfoHeading}>USER_ID</Text>
+                      <Text style={styles.itemInfoText}>
+                        {selectedDream.userId}
+                      </Text>
+                    </View> */}
+                  </View>
                 </ScrollView>
               </View>
             )}
@@ -167,58 +238,81 @@ const { height, width } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
   topBarContainer: {
-    // marginTop: 20,
-    // marginBottom: 15,
     height: getHeaderHeight(),
     backgroundColor: colors.SECONDARY,
     flexDirection: "row",
     justifyContent: "space-between"
   },
   modalBackground: {
-    backgroundColor: colors.BACKGROUND
+    backgroundColor: colors.BACKGROUND,
+    padding: 20
   },
   modalContainer: {
-    margin: 20,
     height: height,
     backgroundColor: colors.ITEM,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.ITEM
-    // flex: 1,
-    // flexDirection: 'column',
-    // justifyContent: 'space-between',
-    // alignItems: 'stretch',
   },
   scrollViewContainer: {
     height: 200,
     paddingBottom: 500
-    // height: height * 0.75
   },
-  modalText: {
-    padding: 3,
-    fontWeight: "bold",
-    // textAlign: 'center',
-    fontSize: 15
-  },
-  modalImage: {
-    width: "100%",
-    height: 200
-  },
-  buttonLayout: {
-    // flex: 1,
+  titleBarContainer: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: "yellow",
-    height: height * 0.5
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 85,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.ITEM_BOTTOM_BORDER
   },
-  button: {
-    height: 100
-  }
+  infoContainer: {
+    marginLeft: 20,
+    marginRight: 20
+  },
+  titleBarImage: {
+    height: 50,
+    width: 50
+  },
+  itemTitle: {
+    color: colors.ITEM_MAIN_TITLE,
+    fontSize: 17
+  },
+  itemTheme: {
+    color: colors.ITEM_MAIN_THEME_TEXT,
+    fontSize: 14
+  },
+  itemDate: {
+    color: colors.ITEM_MAIN_DATE_TIME,
+    fontSize: 12
+  },
+  itemInfoArea: {
+    minHeight: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.ITEM_BOTTOM_BORDER
+  },
+  lastItemInfoArea: {
+    minHeight: 100,
+    paddingBottom: 150
+  },
+  itemInfoHeading: {
+    marginTop: 20,
+    fontSize: 12,
+    color: colors.ITEM_HEADING
+  },
+  itemInfoText: {
+    marginTop: 15,
+    paddingBottom: 35,
+    fontSize: 17,
+    color: colors.ITEM_TEXT
+  },
 });
 
 const mapStateToProps = state => {
   return {
-    // selectedDreamState: state.dreams.selectedDreamState,
     selectedDream: state.dreams.selectedDream,
     isEditing: state.dreams.isEditing,
     
