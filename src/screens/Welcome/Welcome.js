@@ -12,14 +12,19 @@ export class Welcome extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          title="Login"
-          onPress={this.loginHandler}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => alert("Sign Up to come later")}
-        />
+        <Image
+          // resizeMode="cover"
+          source={require('../../assets/welcome.png')}
+          style={styles.backgroundImage}
+        >
+          <View style={styles.loginForm}>
+            <Button title="Explore" onPress={this.loginHandler} />
+            {/* <Button
+              title="Sign Up"
+              onPress={() => alert("Sign Up to come later")}
+            /> */}
+          </View>
+        </Image>
       </View>
     );
   }
@@ -27,11 +32,22 @@ export class Welcome extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+    // flexDirection: 'column',
+    // justifyContent: 'center',
+    // alignItems: 'center'
+  },
+  backgroundImage: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    resizeMode: "cover"
+  },
+  loginForm: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
 });
 
 export default Welcome;
