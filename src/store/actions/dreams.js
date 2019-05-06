@@ -107,6 +107,7 @@ export const getDreams = () => { // Sending GET Req to DreamAPI server
       dispatch(setDreams(parsedRes));
     })
   };
+  
 };
 
 export const setDreams = (dreams) => { // Setting Store/State with all Dreams fetched from the DreamAPI server
