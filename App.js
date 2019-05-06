@@ -1,98 +1,95 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Button, TouchableOpacity , StyleSheet } from 'react-native';
+import Icon from "@expo/vector-icons/Ionicons"; //TODO: replace with react-native-vector-icons library
+import { colors } from './src/Styles/Styles';
 
-export default class App extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      data: null,
-      loaded: true,
-      error: null
+import { createSwitchNavigator,
+         createStackNavigator, 
+         createAppContainer, 
+         createBottomTabNavigator,  } from "react-navigation";
+import { Provider, connect } from 'react-redux';
+
+import configureStore from './src/store/configureStore';
+
+import AuthScreen from './src/screens/Auth/Auth';
+import EntriesScreen from "./src/screens/Entries/Entries";
+import LexiconScreen from "./src/screens/Lexicon/Lexicon";
+import SettingsScreen from "./src/screens/Settings/Settings";
+
+const Entries = createStackNavigator({
+  DashboardTabNavigator: {
+    screen: EntriesScreen,
+    navigationOptions: ({ navigation }) => {
+      return {};
     }
   }
-  //FOR EXPO ONLY
-  // localhost = '127.0.0.1';
-  // myIP = '142.179.74.217';
-  // expoConnection = 'exp://192.168.1.71:______';
-  baseURL = 'http://192.168.1.71:3000';
+});
 
-  getData = (ev) => {
-    this.setState({loaded: false, error: null});
-    let url = this.baseURL + '/dreams';
-    let h = new Headers();
-    h.append('Authorization', 'Bearer DummyJWT-To-BeReplaced');
-    
-    let req = new Request(url, {
-      headers: h,
-      method: 'GET'
-    });
+const Lexicon = createStackNavigator({
+  DashboardTabNavigator: {
+    screen: LexiconScreen
+  }
+});
 
-    fetch(req)
-      .then(response=>response.json())
-      .then(this.showData)
-      .catch(this.error)
+const Settings = createStackNavigator({
+  DashboardTabNavigator: {
+    screen: SettingsScreen
   }
-  showData = (data) => {
-    this.setState({loaded: true, data: data});
-    console.log(data);
+});
 
-  }
-  error = (err) => {
-    this.setState({loaded: true,error: err.message});
-  }
+const DashboardTabNavigator = createBottomTabNavigator({
+    Entries: {screen: Entries,
+      navigationOptions:{
+        tabBarLabel: 'Entries',
+        tabBarIcon:({tintColor}) => (
+          <Icon name='ios-list' color={tintColor} size={24} />
+        )
+      }
+    },
 
-  componentDidMount() {
-    // this.getData();
-  }
-  
+    Lexicon: {screen: Lexicon,
+      navigationOptions:{
+        tabBarLabel: 'Lexicon',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name='ios-book' color={tintColor} size={24} />
+        )
+      }
+    },
+  },
+  {
+    navigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state.routes[navigation.state.index];
+      return {
+        headerTitle: routeName
+      };
+    },
+    tabBarOptions: {
+      activeTintColor: colors.APP_NAV_ICON,
+      inactiveTintColor: 'gray',
+      style: {
+        backgroundColor: colors.BOTTOM_TAB_BAR
+      }
+    },
+  },
+);
+
+const AppSwitchNavigator = createSwitchNavigator({
+  Welcome: { screen: AuthScreen },
+  Dashboard: { screen: DashboardTabNavigator }
+});
+
+const AppContainer = createAppContainer(AppSwitchNavigator)
+
+const store = configureStore();
+
+class App extends Component {
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        {!this.state.loaded && (
-          <Text>LOADING...</Text>
-        )}
-        <Text style={styles.containerText}>Welcome to Dreamer!</Text>
-        <Button 
-          style={styles.button} 
-          title="GET ALL DREAMS" 
-          onPress={this.getData} />
-          { this.state.error !== null && (
-            <Text style={styles.err}>{ this.state.error }</Text>
-          )}
-          { this.state.data && this.state.data.length > 0 && (
-            this.state.data.map( dream => (
-              <Text key={dream._id} style={styles.dreams}>
-                { dream.title }
-              </Text>
-            ))
-          )}
-      </ScrollView>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  containerText: {
-    color: '#000',
-    fontSize: 25,
-    fontWeight: 'bold'
-  },
-  dreams: {
-    color: '#000',
-    fontSize: 15,
-  },
-  button: {
-    color: 'blue',
-  },
-  err:{
-    color: 'red',
-    fontSize: 30,
-    fontWeight: 'bold'
-  }
-});
+export default App;
