@@ -10,7 +10,11 @@ export default class App extends React.Component {
       error: null
     }
   }
-  baseURL = 'http://127.0.0.1:3000';
+  //FOR EXPO ONLY
+  // localhost = '127.0.0.1';
+  // myIP = '142.179.74.217';
+  // expoConnection = 'exp://192.168.1.71:______';
+  baseURL = 'http://192.168.1.71:3000';
 
   getData = (ev) => {
     this.setState({loaded: false, error: null});
